@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Dreamproperty</string>
+    <string name="forgot_pwd">Forgot Password</string>
+    <string name="create_acc">Create an account</string>
+    <string name="email">Email Address</string>
+    <string name="pass">Password</string>
+    <string name="validemail">Please enter valid email-id</string>
+    <string name="validpasee">Please enter password</string>
+    <string name="app_id">806698189507638</string>
+</resources>

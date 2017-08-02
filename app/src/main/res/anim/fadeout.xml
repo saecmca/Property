@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <scale
+        android:duration="@android:integer/config_longAnimTime"
+        android:fromXScale="100%p"
+        android:fromYScale="100%p"
+        android:pivotX="50%p"
+        android:pivotY="50%p"
+        android:toXScale="80%p"
+        android:toYScale="80%p" />
+
+    <alpha
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromAlpha="1"
+        android:toAlpha="0.1" />
+
+</set><!--<?xml version="1.0" encoding="utf-8"?>--><!--<translate xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:duration="1000"--><!--android:fromYDelta="0%"--><!--android:toYDelta="100%" />&lt;!&ndash;<?xml version="1.0" encoding="utf-8"?>&ndash;&gt;&lt;!&ndash;<translate&ndash;&gt;&lt;!&ndash;xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;&lt;!&ndash;android:duration="400"&ndash;&gt;&lt;!&ndash;android:fromXDelta="0"&ndash;&gt;&lt;!&ndash;android:toXDelta="-100%p">&ndash;&gt;&lt;!&ndash;</translate>&ndash;&gt;-->
