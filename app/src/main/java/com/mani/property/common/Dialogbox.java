@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -97,4 +99,13 @@ public static void keyboard(Activity context){
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
+    public static boolean isNetworkStatusAvialable(Context context) {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+            alerts(context, "Network Not Available! Please turn on Wifi or use mobile data.", "0");
+            return false;
+        }
+        return true;
+    }
 }

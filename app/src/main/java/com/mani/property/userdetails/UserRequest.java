@@ -1,4 +1,4 @@
-package com.mani.property.login;
+package com.mani.property.userdetails;
 
 import com.google.gson.annotations.SerializedName;
 

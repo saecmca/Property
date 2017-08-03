@@ -24,4 +24,32 @@ public class Localstorage {
         editor.putString("auth_token", authtoken);
         editor.commit();
     }
+    public static String getSavedUserId(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("save_pref", Context.MODE_PRIVATE);
+        return pref.getString("userid", "");
+    }
+
+    public static String getUsrName(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("save_pref", Context.MODE_PRIVATE);
+        return pref.getString("username", "");
+    }
+
+    public static String getUsrEmail(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("save_pref", Context.MODE_PRIVATE);
+        return pref.getString("email", "");
+    }
+
+    public static String getUsrMob(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("save_pref", Context.MODE_PRIVATE);
+        return pref.getString("mobile", "");
+    }
+    public static void clearAllPreferences(Context context) {
+        SharedPreferences.Editor editor, editor1;
+        SharedPreferences pref;
+        pref = context.getSharedPreferences("save_pref", Context.MODE_PRIVATE);
+        editor = pref.edit();
+        editor.clear();
+        editor.commit();
+
+    }
 }

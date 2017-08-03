@@ -1,4 +1,4 @@
-package com.mani.property.login;
+package com.mani.property.userdetails;
 
 /**
  * Created by Mani on 31-07-2017.

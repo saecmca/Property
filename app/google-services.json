@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "91442919954",
+    "firebase_url": "https://kncc-169611.firebaseio.com",
+    "project_id": "kncc-169611",
+    "storage_bucket": "kncc-169611.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91442919954:android:df17749fda574dba",
+        "android_client_info": {
+          "package_name": "com.mani.property"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91442919954-3apg0gc0l4uepeujq7h7p8vcfg3sac0f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh_SJ4mvb5xAlYIaTgNQR4MeKU6sjvCV0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,7 @@
 package com.mani.property.webservice;
 
-import com.mani.property.login.SigninResponse;
-import com.mani.property.login.UserRequest;
+import com.mani.property.userdetails.SigninResponse;
+import com.mani.property.userdetails.UserRequest;
 
 import java.util.concurrent.TimeUnit;
 
@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 /**
  * Created by SelvaGanesh on 25-04-2017.
@@ -71,5 +72,10 @@ public class RestClient {
         })
         @POST("/api/v1/users/reset_password")
         Call<SigninResponse> getForgot(@Body UserRequest signinRequest);
+        @Headers({
+                "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
+        })
+        @PUT("/api/v1/users")
+        Call<SigninResponse> getProfileUpdate(@Body UserRequest signinRequest);
     }
 }

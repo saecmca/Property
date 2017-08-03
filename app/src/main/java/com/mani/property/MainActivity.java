@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.mani.property.common.Localstorage;
 import com.mani.property.home.HomeActivity;
-import com.mani.property.login.Login;
+import com.mani.property.userdetails.Login;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

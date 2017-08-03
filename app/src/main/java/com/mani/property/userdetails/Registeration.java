@@ -1,4 +1,4 @@
-package com.mani.property.login;
+package com.mani.property.userdetails;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -132,7 +132,7 @@ public class Registeration extends AppCompatActivity {
                 public void onResponse(Call<SigninResponse> call, Response<SigninResponse> response) {
                     SigninResponse model = response.body();
                     if (model != null && model.getStatus() != null && model.getStatus().getId().equalsIgnoreCase("1")) {
-                        Localstorage.saveLoginPref(Registeration.this,true,model.getUserId(),model.getUsername(),model.getMobile(),"",model.getAuth_token());
+                        Localstorage.saveLoginPref(Registeration.this,true,model.getUserId(),model.getUsername(),model.getMobile(),strEmail,model.getAuth_token());
                         Toast.makeText(getApplicationContext(), model.getStatus().getDescription(), Toast.LENGTH_SHORT).show();
                         Intent main = new Intent(Registeration.this, HomeActivity.class);
                         startActivity(main);
