@@ -18,15 +18,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mani.property.R;
+import com.mani.property.common.Dialogbox;
 import com.mani.property.common.Localstorage;
 import com.mani.property.userdetails.Login;
 import com.mani.property.userdetails.Profile;
+import com.mani.property.userdetails.UserRequest;
+import com.mani.property.webservice.RestClient;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity  {
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @BindView(R.id.ivMenu)
@@ -48,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.tvListview)
     TextView tvListview;
     private boolean doubleBackToExitPressedOnce = false;
-
+       private ArrayList<PropertyModel>arrProperty=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +119,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.ivSearch, R.id.ivFav, R.id.bntStart, R.id.tvMapview, R.id.tvListview})
+    @OnClick({R.id.ivMenu,R.id.ivSearch, R.id.ivFav, R.id.bntStart, R.id.tvMapview, R.id.tvListview})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivMenu:
@@ -124,11 +132,44 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.bntStart:
                 layEnd.setVisibility(View.VISIBLE);
                 layStart.setVisibility(View.GONE);
+                if(Dialogbox.isNetworkStatusAvialable(this))
+                    websercviceProperty();
                 break;
             case R.id.tvMapview:
                 break;
             case R.id.tvListview:
                 break;
+        }
+    }
+
+    private void websercviceProperty() {
+
+        try {
+             UserRequest userRequest = new UserRequest();
+            userRequest.setUserId(Localstorage.getSavedUserId(this));
+            Dialogbox.showDialog(HomeActivity.this, "Loading...");
+            RestClient.APIInterface apiInterface = RestClient.getapiclient();
+            Call<PropertyResp> getcancelresponse = apiInterface.getPrpertyList(userRequest);
+            getcancelresponse.enqueue(new Callback<PropertyResp>() {
+                @Override
+                public void onResponse(Call<PropertyResp> call, Response<PropertyResp> response) {
+                    PropertyResp model = response.body();
+                    if (model != null && model.getStatus() != null && model.getStatus().getId().equalsIgnoreCase("1")) {
+                        arrProperty=model.getProperties();
+                    } else {
+                        Dialogbox.alerts(HomeActivity.this, model.getStatus().getDescription(), "2");
+                    }
+                    Dialogbox.dismissDialog();
+                }
+
+                @Override
+                public void onFailure(Call<PropertyResp> call, Throwable t) {
+                    Dialogbox.dismissDialog();
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -64,6 +64,7 @@ public class Registeration extends AppCompatActivity {
     public void onViewClicked() {
         if (validation()) {
             Dialogbox.keyboard(Registeration.this);
+            if(Dialogbox.isNetworkStatusAvialable(this))
             webserviceRegister(strName,strEmail,strMobile,strPass);
         }
     }

@@ -1,5 +1,6 @@
 package com.mani.property.webservice;
 
+import com.mani.property.home.PropertyResp;
 import com.mani.property.userdetails.SigninResponse;
 import com.mani.property.userdetails.UserRequest;
 
@@ -77,5 +78,14 @@ public class RestClient {
         })
         @PUT("/api/v1/users")
         Call<SigninResponse> getProfileUpdate(@Body UserRequest signinRequest);
+
+        @Headers({
+                "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
+        })
+        @POST("/api/v1/properties")
+        Call<PropertyResp> getPrpertyList(@Body UserRequest signinRequest);
+
+
+
     }
 }

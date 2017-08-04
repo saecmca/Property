@@ -80,6 +80,7 @@ public class Profile extends AppCompatActivity {
             UserRequest userRequest = new UserRequest();
             signinRequest.setMobile(mobile);
             signinRequest.setUsername(Username);
+            userRequest.setUserId(Localstorage.getSavedUserId(this));
             userRequest.setUser(signinRequest);
             Dialogbox.showDialog(Profile.this, "Loading...");
             RestClient.APIInterface apiInterface = RestClient.getapiclient();

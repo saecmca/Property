@@ -144,6 +144,7 @@ public class Login extends AppCompatActivity {
                 etUsernameLayout.setErrorEnabled(false);
                 etPasswordLayout.setErrorEnabled(false);
                 Dialogbox.keyboard(Login.this);
+                if(Dialogbox.isNetworkStatusAvialable(this))
                 webserviceLogin(strUsername, strPassword);
 
 
@@ -178,6 +179,7 @@ public class Login extends AppCompatActivity {
                         } else {
                             alertDialog.dismiss();
                             Dialogbox.keyboard(Login.this);
+                            if(Dialogbox.isNetworkStatusAvialable(Login.this))
                             webserviceForgot(urlEditText.getText().toString().trim());
                         }
                     }

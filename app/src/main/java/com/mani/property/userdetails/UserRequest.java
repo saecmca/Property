@@ -7,6 +7,15 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class UserRequest {
+    public String getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(String userId) {
+        UserId = userId;
+    }
+
+    private String UserId;
     public SigninRequest getUser() {
         return user;
     }
