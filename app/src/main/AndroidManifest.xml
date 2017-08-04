@@ -3,7 +3,8 @@
     package="com.mani.property">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -42,8 +43,14 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
 
-        <activity android:name=".userdetails.Profile"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".userdetails.Profile"
+            android:screenOrientation="portrait" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDLxZQwZj3mIIpFBIVx8UW6mUpcGgyJj9g" />
     </application>
+
+
 
 </manifest>
