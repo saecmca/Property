@@ -117,7 +117,7 @@
 
         <LinearLayout
             android:id="@+id/layEnd"
-            android:visibility="gone"
+             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/toolbar"
@@ -173,6 +173,12 @@
                 android:id="@+id/near_by_map"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rclProperty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
 
         </LinearLayout>
     </RelativeLayout>

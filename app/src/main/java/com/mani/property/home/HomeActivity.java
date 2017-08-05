@@ -1,14 +1,16 @@
 package com.mani.property.home;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,10 +29,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mani.property.R;
 import com.mani.property.common.Dialogbox;
 import com.mani.property.common.Localstorage;
+import com.mani.property.searches.SearchActivity;
 import com.mani.property.userdetails.Login;
 import com.mani.property.userdetails.Profile;
 import com.mani.property.userdetails.UserRequest;
@@ -66,30 +70,45 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     TextView tvMapview;
     @BindView(R.id.tvListview)
     TextView tvListview;
+    @BindView(R.id.rclProperty)
+    RecyclerView rclProperty;
     private MapView mMapView;
     private GoogleMap googleMap;
     private boolean doubleBackToExitPressedOnce = false;
-       private ArrayList<PropertyModel>arrProperty=new ArrayList<>();
+    private ArrayList<PropertyModel> arrProperty = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-        setUpNavigationView();
-        /*SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);*/
-        MapsInitializer.initialize(getApplicationContext());
+        if (Dialogbox.isNetworkStatusAvialable(this))
+            websercviceProperty();
         mMapView = (MapView) findViewById(R.id.near_by_map);
-        mMapView.getMapAsync(this);
-       // mMapView.onResume();
+        mMapView.onCreate(savedInstanceState);
+        mMapView.onResume();
+
+        try {
+            MapsInitializer.initialize(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
                 // For showing a move to my location button
-                if (ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
+                if (ActivityCompat.checkSelfPermission(HomeActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(HomeActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
@@ -97,7 +116,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         });
-       // mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -154,25 +172,43 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    @OnClick({R.id.ivMenu,R.id.ivSearch, R.id.ivFav, R.id.bntStart, R.id.tvMapview, R.id.tvListview})
+    @OnClick({R.id.ivMenu, R.id.ivSearch, R.id.ivFav, R.id.bntStart, R.id.tvMapview, R.id.tvListview})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivMenu:
                 drawerLayout.openDrawer(Gravity.START);
                 break;
             case R.id.ivSearch:
+                startActivity(new Intent(this, SearchActivity.class));
                 break;
             case R.id.ivFav:
                 break;
             case R.id.bntStart:
                 layEnd.setVisibility(View.VISIBLE);
                 layStart.setVisibility(View.GONE);
-                if(Dialogbox.isNetworkStatusAvialable(this))
-                    websercviceProperty();
                 break;
             case R.id.tvMapview:
+                mMapView.setVisibility(View.VISIBLE);
+                rclProperty.setVisibility(View.GONE);
+                tvListview.setTextColor(ContextCompat.getColor(this, R.color.gray));
+                tvListview.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_list_gray, 0, 0, 0);
+                tvMapview.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+                tvMapview.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_map_blue, 0, 0, 0);
+                if (arrProperty.size() > 0)
+                    setMArkers(arrProperty);
                 break;
             case R.id.tvListview:
+                mMapView.setVisibility(View.GONE);
+                rclProperty.setVisibility(View.VISIBLE);
+                tvListview.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+                tvListview.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_list_blue, 0, 0, 0);
+                tvMapview.setTextColor(ContextCompat.getColor(this, R.color.gray));
+                tvMapview.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_map_gray, 0, 0, 0);
+
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+                rclProperty.setLayoutManager(mLayoutManager);
+                ListMapAdapter listMapAdapter = new ListMapAdapter(this, arrProperty);
+                rclProperty.setAdapter(listMapAdapter);
                 break;
         }
     }
@@ -180,7 +216,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void websercviceProperty() {
 
         try {
-             UserRequest userRequest = new UserRequest();
+            UserRequest userRequest = new UserRequest();
             userRequest.setUserId(Localstorage.getSavedUserId(this));
             Dialogbox.showDialog(HomeActivity.this, "Loading...");
             RestClient.APIInterface apiInterface = RestClient.getapiclient();
@@ -190,7 +226,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 public void onResponse(Call<PropertyResp> call, Response<PropertyResp> response) {
                     PropertyResp model = response.body();
                     if (model != null && model.getStatus() != null && model.getStatus().getId().equalsIgnoreCase("1")) {
-                        arrProperty=model.getProperties();
+                        arrProperty = model.getProperties();
                         setMArkers(arrProperty);
                     } else {
                         Dialogbox.alerts(HomeActivity.this, model.getStatus().getDescription(), "2");
@@ -209,86 +245,81 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void setMArkers(ArrayList<PropertyModel>locArr) {
+    private void setMArkers(final ArrayList<PropertyModel> maparray_count) {
+        googleMap.clear();
+        for (int i = 0; i < maparray_count.size(); i++) {
 
-            for (int i = 0; i < locArr.size(); i++) {
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.title("hi").snippet("asdf");
 
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(Double.valueOf(locArr.get(i).getLatitude()), Double.valueOf(locArr.get(i).getLongitude()))).
+            if (maparray_count.get(i).getPosting_type().contains("FOR RENT")) {
+                markerOptions.position(new LatLng(Double.valueOf(maparray_count.get(i).getLatitude()), Double.valueOf(maparray_count.get(i).getLongitude()))).
+                        icon(BitmapDescriptorFactory.fromResource(R.mipmap.location_label_red));
+            } else if (maparray_count.get(i).getPosting_type().contains("FOR SALE")) {
+                markerOptions.position(new LatLng(Double.valueOf(maparray_count.get(i).getLatitude()), Double.valueOf(maparray_count.get(i).getLongitude()))).
                         icon(BitmapDescriptorFactory.fromResource(R.mipmap.location_label_purple));
-               // Marker marker = googleMap.addMarker(markerOptions);
-              //  marker.showInfoWindow();
-
             }
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.valueOf(locArr.get(0).getLatitude()), Double.valueOf(locArr.get(0).getLongitude())), 10));
+            Marker marker = googleMap.addMarker(markerOptions);
+            marker.showInfoWindow();
+
+        }
+
+
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.valueOf(maparray_count.get(0).getLatitude()), Double.valueOf(maparray_count.get(0).getLongitude())), 10));
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(Double.valueOf(locArr.get(0).getLatitude()), Double.valueOf(locArr.get(0).getLongitude())))      // Sets the center of the map to location user
+                .target(new LatLng(Double.valueOf(maparray_count.get(0).getLatitude()), Double.valueOf(maparray_count.get(0).getLongitude())))      // Sets the center of the map to location user
                 .zoom(10)                   // Sets the zoom
                 .bearing(90)                // Sets the orientation of the camera to east
                 .tilt(40)                   // Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-          /*  googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+        googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
-                @Override
-                public View getInfoWindow(Marker arg0) {
-                    return null;
-                }
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
 
-                @Override
-                public View getInfoContents(Marker arg0) {
+            @Override
+            public View getInfoContents(Marker arg0) {
 
 
-                    View v = getActivity().getLayoutInflater().inflate(R.layout.window_info_layout, null);
-                    LatLng position = arg0.getPosition();
+                View v = getLayoutInflater().inflate(R.layout.window_info_layout, null);
+                LatLng position = arg0.getPosition();
 
-                    TextView locname = (TextView) v.findViewById(R.id.loc_name);
-                    TextView locdist = (TextView) v.findViewById(R.id.loc_dist);
-                    TextView locadd = (TextView) v.findViewById(R.id.loc_address);
-                    ImageView marker_image = (ImageView) v.findViewById(R.id.marker_image);
-                    for (int i = 0; i < locArr.size(); i++) {
-                        if (position.latitude == locArr.get(i).getLatitude()) {
-                            locname.setText(locArr.get(i).getLocName());
-                            locdist.setText(locArr.get(i).getDistance()+" KM");
-                            locadd.setText(locArr.get(i).getLocAddress());
-                            Picasso.with(getActivity())
-                                    .load(locArr.get(i).getImage_URL())
-                                    .placeholder(R.mipmap.mytvs_logo)
-                                    .error(R.mipmap.mytvs_logo)
-                                    .into(marker_image);
-                            Service_center_contact_no_mobile = locArr.get(i).getMobile();
-                            Service_center_directions = locArr.get(i).getLatitude() + "," + locArr.get(i).getLongitude();
-                            Service_center_book_service = locArr.get(i).getID();
-                            Service_center_contact_no_lanline = locArr.get(i).getPhone();
-                            tinyDB.putString("Serive_center_ID", Service_center_book_service);
+                TextView locname = (TextView) v.findViewById(R.id.loc_name);
+                TextView locdist = (TextView) v.findViewById(R.id.loc_dist);
+                TextView locadd = (TextView) v.findViewById(R.id.loc_address);
+                ImageView marker_image = (ImageView) v.findViewById(R.id.marker_image);
+                for (int i = 0; i < maparray_count.size(); i++) {
+                    if (String.valueOf(position.latitude) == maparray_count.get(i).getLatitude()) {
+                        locname.setText(maparray_count.get(i).getCity());
+                        locdist.setText(maparray_count.get(i).getState());
+                        locadd.setText(maparray_count.get(i).getStreet());
 
-                            if (!Service_center_contact_no_mobile.equalsIgnoreCase("") && !Service_center_directions.equalsIgnoreCase("") && !Service_center_book_service.equalsIgnoreCase("")) {
-                                mFabmennu.setVisibility(View.VISIBLE);
-                            } else {
-                                mFabmennu.setVisibility(View.GONE);
-                            }
-
-                        }
                     }
-
-                    v.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
-                    });
-                    return v;
-
                 }
-            });
 
-            googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                @Override
-                public void onInfoWindowClick(Marker marker) {
-                    NextScren();
-                }
-            });*/
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                return v;
+
+            }
+        });
+
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Toast.makeText(HomeActivity.this, "Hai", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     @Override

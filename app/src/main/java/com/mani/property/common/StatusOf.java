@@ -1,5 +1,7 @@
 package com.mani.property.common;
 
+import java.util.ArrayList;
+
 /**
  * Created by Mani on 31-07-2017.
  */
@@ -24,4 +26,15 @@ private String id;
     }
 
     private String description;
+
+    public ArrayList<String> getUrl() {
+        return url;
+    }
+
+    public void setUrl(ArrayList<String> url) {
+        this.url = url;
+    }
+
+    private ArrayList<String>url;
+
 }

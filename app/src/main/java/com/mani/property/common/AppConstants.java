@@ -5,4 +5,5 @@ package com.mani.property.common;
  */
 
 public class AppConstants {
+    private static String PROPERTYLIST="PROPERTYLIST";
 }

@@ -1,5 +1,7 @@
 package com.mani.property.home;
 
+import com.mani.property.common.StatusOf;
+
 /**
  * Created by Mani on 04-08-2017.
  */
@@ -14,6 +16,37 @@ private String street;
     private String amount;
     private String squareaft;
     private String bedrooms;
+
+    public String getPosting_type() {
+        return posting_type;
+    }
+
+    public void setPosting_type(String posting_type) {
+        this.posting_type = posting_type;
+    }
+
+    private String posting_type;
+
+    public StatusOf getImages() {
+        return images;
+    }
+
+    public void setImages(StatusOf images) {
+        this.images = images;
+    }
+
+    StatusOf images;
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    private String status;
 
     public String getStreet() {
         return street;
