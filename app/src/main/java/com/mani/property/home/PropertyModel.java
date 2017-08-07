@@ -10,13 +10,31 @@ public class PropertyModel {
 private String street;
     private String city;
     private String state;
-    private String zipcode;
+
+    public String getZpid() {
+        return zpid;
+    }
+
+    public void setZpid(String zpid) {
+        this.zpid = zpid;
+    }
+
+    private String zpid;
     private String latitude;
     private String longitude;
     private String amount;
     private String squareaft;
     private String bedrooms;
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    private boolean favorite;
     public String getPosting_type() {
         return posting_type;
     }
@@ -72,13 +90,7 @@ private String street;
         this.state = state;
     }
 
-    public String getZipcode() {
-        return zipcode;
-    }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
 
     public String getLatitude() {
         return latitude;

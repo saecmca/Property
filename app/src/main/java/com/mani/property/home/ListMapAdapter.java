@@ -44,14 +44,18 @@ public class ListMapAdapter extends RecyclerView.Adapter<ListMapAdapter.MyHolder
                 holder.tvType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_rent, 0, 0, 0);
             else if (positionMovie.getPosting_type().contains("FOR SALE"))
                 holder.tvType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_sale, 0, 0, 0);
-            holder.tvAmt.setText("$"+positionMovie.getAmount());
+            holder.tvAmt.setText("$" + positionMovie.getAmount());
             holder.tvBed.setText(positionMovie.getBedrooms() + " Bed(s)");
             holder.tvBoth.setText(positionMovie.getBathrooms() + " Bath(s)");
             holder.tvArea.setText(positionMovie.getSquareaft() + " Sqfts");
             holder.tvAddr.setText(positionMovie.getStreet() + ", " + positionMovie.getCity());
-               if(positionMovie.getImages().getUrl()!=null)
+            if (positionMovie.getImages().getUrl() != null)
                 Picasso.with(mcontent).load(positionMovie.getImages().getUrl().get(0)).into(holder.ivImageUrl);
+            else holder.ivImageUrl.setImageResource(R.drawable.loginbg);
 
+            if (positionMovie.isFavorite())
+                holder.iv_Favi.setImageResource(R.drawable.icon_favorite_red);
+            else holder.iv_Favi.setImageResource(R.drawable.icon_favorite_trans);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,8 +68,8 @@ public class ListMapAdapter extends RecyclerView.Adapter<ListMapAdapter.MyHolder
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        TextView tvType, tvBed, tvBoth, tvAddr, tvAmt, tvArea;
-        ImageView ivImageUrl;
+        private TextView tvType, tvBed, tvBoth, tvAddr, tvAmt, tvArea;
+        private ImageView ivImageUrl, iv_Favi;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -76,6 +80,7 @@ public class ListMapAdapter extends RecyclerView.Adapter<ListMapAdapter.MyHolder
             tvAmt = (TextView) itemView.findViewById(R.id.tvAmt);
             tvArea = (TextView) itemView.findViewById(R.id.tvArea);
             ivImageUrl = (ImageView) itemView.findViewById(R.id.iv_Image);
+            iv_Favi = (ImageView) itemView.findViewById(R.id.iv_Favi);
 
         }
     }
