@@ -1,4 +1,4 @@
-package com.mani.property.home;
+package com.mani.property.favourite;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,17 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mani.property.R;
+import com.mani.property.home.PropertyModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ListMapAdapter extends RecyclerView.Adapter<ListMapAdapter.MyHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyHolder> {
 
     Context mcontent;
     ArrayList<PropertyModel> arrayList;
 
 
-    public ListMapAdapter(Context context, ArrayList<PropertyModel> datelist) {
+    public FavoriteAdapter(Context context, ArrayList<PropertyModel> datelist) {
         arrayList = datelist;
         this.mcontent = context;
 
@@ -38,24 +39,27 @@ public class ListMapAdapter extends RecyclerView.Adapter<ListMapAdapter.MyHolder
     public void onBindViewHolder(MyHolder holder, int position) {
 
         try {
-            PropertyModel positionMovie = arrayList.get(position);
-            holder.tvType.setText("  " + positionMovie.getPosting_type());
-            if (positionMovie.getPosting_type().contains("FOR RENT"))
-                holder.tvType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_rent, 0, 0, 0);
-            else if (positionMovie.getPosting_type().contains("FOR SALE"))
-                holder.tvType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_sale, 0, 0, 0);
-            holder.tvAmt.setText("$" + positionMovie.getAmount());
-            holder.tvBed.setText(positionMovie.getBedrooms() + " Bed(s)");
-            holder.tvBoth.setText(positionMovie.getBathrooms() + " Bath(s)");
-            holder.tvArea.setText(positionMovie.getSquareaft() + " Sqfts");
-            holder.tvAddr.setText(positionMovie.getStreet() + ", " + positionMovie.getCity());
-            if (positionMovie.getImages().getUrl() != null)
-                Picasso.with(mcontent).load(positionMovie.getImages().getUrl().get(0)).into(holder.ivImageUrl);
-            else holder.ivImageUrl.setImageResource(R.drawable.loginbg);
 
-            if (positionMovie.isFavorite())
+            PropertyModel positionMovie = arrayList.get(position);
+            if (positionMovie.isFavorite()) {
+                holder.tvType.setText("  " + positionMovie.getPosting_type());
+                if (positionMovie.getPosting_type().contains("FOR RENT"))
+                    holder.tvType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_rent, 0, 0, 0);
+                else if (positionMovie.getPosting_type().contains("FOR SALE"))
+                    holder.tvType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_sale, 0, 0, 0);
+                holder.tvAmt.setText("$" + positionMovie.getAmount());
+                holder.tvBed.setText(positionMovie.getBedrooms() + " Bed(s)");
+                holder.tvBoth.setText(positionMovie.getBathrooms() + " Bath(s)");
+                holder.tvArea.setText(positionMovie.getSquareaft() + " Sqfts");
+                holder.tvAddr.setText(positionMovie.getStreet() + ", " + positionMovie.getCity());
+                if (positionMovie.getImages().getUrl() != null)
+                    Picasso.with(mcontent).load(positionMovie.getImages().getUrl().get(0)).into(holder.ivImageUrl);
+                else holder.ivImageUrl.setImageResource(R.drawable.loginbg);
+
+
                 holder.iv_Favi.setImageResource(R.drawable.icon_favorite_red);
-            else holder.iv_Favi.setImageResource(R.drawable.icon_favorite_trans);
+            }
+            //else holder.iv_Favi.setImageResource(R.drawable.icon_favorite_trans);
 
         } catch (Exception e) {
             e.printStackTrace();

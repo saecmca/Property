@@ -54,7 +54,8 @@
             android:value="AIzaSyDLxZQwZj3mIIpFBIVx8UW6mUpcGgyJj9g" />
 
         <activity android:name=".searches.SavedSearches" />
-        <activity android:name=".searches.SearchActivity"></activity>
+        <activity android:name=".searches.SearchActivity" />
+        <activity android:name=".favourite.FavouriteScreen"></activity>
     </application>
 
 </manifest>

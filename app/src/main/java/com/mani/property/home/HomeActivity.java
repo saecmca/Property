@@ -1,5 +1,6 @@
 package com.mani.property.home;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,12 +39,13 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.iamhabib.easy_preference.EasyPreference;
 import com.mani.property.R;
 import com.mani.property.common.Dialogbox;
-import com.mani.property.common.ItemClickSupport;
 import com.mani.property.common.Localstorage;
 import com.mani.property.favourite.FavResp;
 import com.mani.property.favourite.FavouriteReq;
+import com.mani.property.favourite.FavouriteScreen;
 import com.mani.property.searches.SearchActivity;
 import com.mani.property.userdetails.Login;
 import com.mani.property.userdetails.Profile;
@@ -75,7 +78,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @BindView(R.id.layStart)
     RelativeLayout layStart;
     @BindView(R.id.layEnd)
-    LinearLayout layEnd;
+    RelativeLayout layEnd;
     @BindView(R.id.tvMapview)
     TextView tvMapview;
     @BindView(R.id.tvListview)
@@ -100,6 +103,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     TextView tvArea;
     @BindView(R.id.iv_Image)
     ImageView iv_Image;
+    @BindView(R.id.layMapIndicator)
+    LinearLayout layMapIndicator;
+
     private ListMapAdapter listMapAdapter;
     private int selectPos = 0;
     private MapView mMapView;
@@ -132,14 +138,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 googleMap = mMap;
 
                 // For showing a move to my location button
-                if (ActivityCompat.checkSelfPermission(HomeActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(HomeActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+                if (ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
@@ -192,7 +192,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         break;
                     case R.id.nav_profile:
                         startActivity(new Intent(HomeActivity.this, Profile.class));
-
+                       break;
+                    case R.id.nav_fav:
+                        startActivity(new Intent(HomeActivity.this, FavouriteScreen.class));
+                        break;
                     default:
 
                 }
@@ -203,7 +206,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    @OnClick({R.id.ivMenu, R.id.ivSearch, R.id.ivFav, R.id.bntStart, R.id.tvMapview, R.id.tvListview})
+    @OnClick({R.id.ivMenu, R.id.ivSearch, R.id.ivFav, R.id.bntStart, R.id.tvMapview, R.id.tvListview,R.id.tvClose})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivMenu:
@@ -221,6 +224,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     setMArkers(arrProperty);
                 break;
             case R.id.tvMapview:
+                layMapIndicator.setVisibility(View.VISIBLE);
                 mMapView.setVisibility(View.VISIBLE);
                 rclProperty.setVisibility(View.GONE);
                 tvListview.setTextColor(ContextCompat.getColor(this, R.color.gray));
@@ -231,6 +235,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     setMArkers(arrProperty);
                 break;
             case R.id.tvListview:
+                layMapIndicator.setVisibility(View.GONE);
                 mMapView.setVisibility(View.GONE);
                 rclProperty.setVisibility(View.VISIBLE);
                 layPopItem.setVisibility(View.GONE);//selected map marker Item
@@ -243,30 +248,11 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 rclProperty.setLayoutManager(mLayoutManager);
                 listMapAdapter = new ListMapAdapter(this, arrProperty);
                 rclProperty.setAdapter(listMapAdapter);
-              /*  rclProperty.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        final ImageView Imageview = (ImageView)v.findViewById(R.id.iv_Favi);
-                        Imageview.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(getApplicationContext(), "Click", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return false;
-                    }
-                });*/
-                ItemClickSupport.addTo(rclProperty).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        if (Dialogbox.isNetworkStatusAvialable(HomeActivity.this))
-                            favouriteMethod(arrProperty.get(position).getZpid(), arrProperty.get(position).isFavorite(), position, "listview");
-
-                    }
-                });
 
                 break;
-
+            case R.id.tvClose:
+                layPopItem.setVisibility(View.GONE);
+                break;
         }
     }
 
@@ -284,6 +270,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     PropertyResp model = response.body();
                     if (model != null && model.getStatus() != null && model.getStatus().getId().equalsIgnoreCase("1")) {
                         arrProperty = model.getProperties();
+                        EasyPreference.with(HomeActivity.this).addObject("af",arrProperty).save();
                         //  setMArkers(arrProperty);
                     } else {
                         Dialogbox.alerts(HomeActivity.this, model.getStatus().getDescription(), "2");
@@ -457,4 +444,91 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap mgoogleMap) {
         googleMap = mgoogleMap;
     }
+
+
+
+    //adapter class
+    public class ListMapAdapter extends RecyclerView.Adapter<ListMapAdapter.MyHolder> {
+
+        Context mcontent;
+        ArrayList<PropertyModel> arrayList;
+
+
+        public ListMapAdapter(Context context, ArrayList<PropertyModel> datelist) {
+            arrayList = datelist;
+            this.mcontent = context;
+
+        }
+
+
+        @Override
+        public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_listproperty, parent, false);
+
+            return new MyHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MyHolder holder, final int position) {
+
+            try {
+                final PropertyModel positionMovie = arrayList.get(position);
+                holder.tvType.setText("  " + positionMovie.getPosting_type());
+                if (positionMovie.getPosting_type().contains("FOR RENT"))
+                    holder.tvType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_rent, 0, 0, 0);
+                else if (positionMovie.getPosting_type().contains("FOR SALE"))
+                    holder.tvType.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_sale, 0, 0, 0);
+                holder.tvAmt.setText("$" + positionMovie.getAmount());
+                holder.tvBed.setText(positionMovie.getBedrooms() + " Bed(s)");
+                holder.tvBoth.setText(positionMovie.getBathrooms() + " Bath(s)");
+                holder.tvArea.setText(positionMovie.getSquareaft() + " Sqfts");
+                holder.tvAddr.setText(positionMovie.getStreet() + ", " + positionMovie.getCity());
+                if (positionMovie.getImages().getUrl() != null)
+                    Picasso.with(mcontent).load(positionMovie.getImages().getUrl().get(0)).into(holder.ivImageUrl);
+                else holder.ivImageUrl.setImageResource(R.drawable.loginbg);
+
+                if (positionMovie.isFavorite())
+                    holder.iv_Favi.setImageResource(R.drawable.icon_favorite_red);
+                else holder.iv_Favi.setImageResource(R.drawable.icon_favorite_trans);
+
+
+                holder.iv_Favi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Dialogbox.isNetworkStatusAvialable(HomeActivity.this))
+                            favouriteMethod(positionMovie.getZpid(), positionMovie.isFavorite(), position, "listview");
+
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return arrayList.size();
+        }
+
+        public class MyHolder extends RecyclerView.ViewHolder {
+            private TextView tvType, tvBed, tvBoth, tvAddr, tvAmt, tvArea;
+            private ImageView ivImageUrl, iv_Favi;
+
+            public MyHolder(View itemView) {
+                super(itemView);
+                tvType = (TextView) itemView.findViewById(R.id.tv_type);
+                tvBed = (TextView) itemView.findViewById(R.id.tvbed);
+                tvBoth = (TextView) itemView.findViewById(R.id.tvBoth);
+                tvAddr = (TextView) itemView.findViewById(R.id.tvAddr);
+                tvAmt = (TextView) itemView.findViewById(R.id.tvAmt);
+                tvArea = (TextView) itemView.findViewById(R.id.tvArea);
+                ivImageUrl = (ImageView) itemView.findViewById(R.id.iv_Image);
+                iv_Favi = (ImageView) itemView.findViewById(R.id.iv_Favi);
+
+            }
+        }
+    }
+
 }
