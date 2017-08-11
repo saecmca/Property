@@ -173,16 +173,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setUpNavigationView() {
 
-/*
-
-        Menu menu = navView.getMenu();
-
-        MenuItem tools= menu.findItem(R.id.tools);
-
-        SpannableString s = new SpannableString(tools.getTitle());
-        s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance44),0, s.length(), 0);
-        tools.setTitle(s);
-*/
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
