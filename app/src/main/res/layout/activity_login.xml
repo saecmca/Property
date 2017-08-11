@@ -16,7 +16,14 @@
             android:layout_height="@dimen/_200sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/loginbg" />
-
+        <TextView
+            android:textSize="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="RICHPIGEONS"
+            android:textColor="@color/block" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

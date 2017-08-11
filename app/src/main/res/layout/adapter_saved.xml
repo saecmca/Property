@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:padding="@dimen/_6sdp"
+        android:id="@+id/tvCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="asdfasdf"
+        android:textColor="@color/block"
+        android:textSize="@dimen/_13sdp" />
+    <TextView
+        android:layout_centerInParent="true"
+        android:layout_marginRight="@dimen/_8sdp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/tvClose"
+        android:textSize="@dimen/_16sdp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="X"
+        android:background="@drawable/circle_sale"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp" />
+
+    <View
+        android:layout_below="@+id/tvCity"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorAccent" />
+
+</RelativeLayout>

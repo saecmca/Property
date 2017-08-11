@@ -28,4 +28,14 @@ public class PropertyResp {
     }
 
     ArrayList<PropertyModel>properties;
+
+    public ArrayList<PropertyModel> getFavorite_properties() {
+        return favorite_properties;
+    }
+
+    public void setFavorite_properties(ArrayList<PropertyModel> favorite_properties) {
+        this.favorite_properties = favorite_properties;
+    }
+
+    ArrayList<PropertyModel>favorite_properties;
 }

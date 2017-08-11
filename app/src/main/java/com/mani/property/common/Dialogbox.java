@@ -31,6 +31,34 @@ public class Dialogbox {
     public static String alerts(final Context context, String Errormsg, final String strType) {
         try {
 
+/*
+            MaterialDialog dialog=new MaterialDialog.Builder(context)
+
+                    .title("Richpigeons").titleGravity(GravityEnum.CENTER)
+
+                    .customView(R.layout.custom_dialog, false)
+                    .positiveText("OK").positiveColor(ContextCompat.getColor(context,R.color.colorPrimary))
+                    .canceledOnTouchOutside(false)
+                    .cancelable(false)
+                   *//* .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            // TODO
+                            dialog.dismiss();
+                            if (strType.equals("1")) {
+                                Intent refresh = new Intent(context, context.getClass());
+                                context.startActivity(refresh);
+                                ((Activity) context).finish();
+                            } else if (strType.equals("0")) {
+                                ((Activity) context).finish();
+                            }
+
+                        }
+                    })*//*
+
+                    .show();*/
+
+
             final Dialog dialog = new Dialog(context);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             Window window = dialog.getWindow();
@@ -39,8 +67,8 @@ public class Dialogbox {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             dialog.setCancelable(false);
-            TextView tvClose = (TextView) dialog.findViewById(R.id.tvclose);
-            TextView tvMsg = (TextView) dialog.findViewById(R.id.tvDialog);
+            TextView tvClose = (TextView) dialog.findViewById(R.id.tvOk);
+            TextView tvMsg = (TextView) dialog.findViewById(R.id.tvMsg);
 
             tvMsg.setText(Errormsg);
             dialog.setCanceledOnTouchOutside(false);
@@ -66,6 +94,7 @@ public class Dialogbox {
         return Errormsg;
 
     }
+
     public static void showDialog(Context mContext, String strMessage) {
         try {
             if (pgdialog != null)
@@ -91,14 +120,16 @@ public class Dialogbox {
             e.printStackTrace();
         }
     }
-public static void keyboard(Activity context){
 
-    View view=context.getCurrentFocus();
-    if (view != null) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    public static void keyboard(Activity context) {
+
+        View view = context.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
-}
+
     public static boolean isNetworkStatusAvialable(Context context) {
         ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();

@@ -27,6 +27,7 @@
                 android:src="@mipmap/icon_back" />
 
             <SearchView
+                android:id="@+id/searchview"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_centerInParent="true"
@@ -35,6 +36,7 @@
                 android:focusable="false"
                 android:iconifiedByDefault="false"
                 android:queryHint="Search city,state or zip"
+                android:searchIcon="@mipmap/icon_search"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />
 
@@ -54,11 +56,38 @@
 
     <LinearLayout
         android:id="@+id/layEnd"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
         android:orientation="vertical">
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/laySave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:id="@+id/tvSavetext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+             />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:text="Save Search"
+                android:textColor="@color/white" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -66,7 +95,49 @@
             android:background="@color/white"
             android:orientation="horizontal">
 
-            <RadioButton
+
+            <RadioGroup
+                android:id="@+id/radio_grp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radoSale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/colorPrimary"
+                    android:checked="true"
+                    android:gravity="center|left"
+                    android:text="FOR SALE"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_16sdp" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_15sdp"
+                    android:background="@color/colorAccent" />
+
+                <RadioButton
+                    android:id="@+id/rdoRent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/colorPrimary"
+                    android:gravity="center|left"
+                    android:text="FOR RENT"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_16sdp" />
+            </RadioGroup>
+
+            <!--<RadioButton
+
                 android:id="@+id/radoSale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,8 +148,7 @@
                 android:gravity="center"
                 android:text="FOR SALE"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_16sdp"
-                 />
+                android:textSize="@dimen/_16sdp" />
 
             <View
                 android:id="@+id/view1"
@@ -89,6 +159,7 @@
                 android:background="@color/colorAccent" />
 
             <RadioButton
+
                 android:id="@+id/rdoRent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,10 +172,11 @@
                 android:text="FOR RENT"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_16sdp"
-                android:theme="@style/RadioButtonStyle" />
+                 />
 
-
+-->
         </RelativeLayout>
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rclSearchProperty"

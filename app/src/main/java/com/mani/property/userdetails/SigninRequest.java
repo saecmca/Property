@@ -9,6 +9,15 @@ public class SigninRequest {
     private String password;
     private String username;
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    private String type;
 
 
 
@@ -45,5 +54,16 @@ public class SigninRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "SigninRequest{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", type='" + type + '\'' +
+                ", mobile='" + mobile + '\'' +
+                '}';
     }
 }

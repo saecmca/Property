@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-        <item android:title="Category 1">
+    <item
+        android:id="@+id/tools"
+        android:title="Category 1">
         <menu>
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@mipmap/profile_gray"
-            android:title="My Profile" />
-        <item
-            android:id="@+id/nav_fav"
-            android:icon="@mipmap/favorite_gray"
-            android:title="Favorites" />
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@mipmap/profile_gray"
+                android:title="My Profile" />
+            <item
+                android:id="@+id/nav_fav"
+                android:icon="@mipmap/favorite_gray"
+                android:title="Favorites" />
 
         </menu>
-        </item>
+    </item>
 
 
     <item android:title="Category 2">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_saved"
                 android:icon="@mipmap/savedsearch_gray"
                 android:title="Saved Searches" />
             <item

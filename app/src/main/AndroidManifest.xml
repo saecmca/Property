@@ -53,9 +53,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDLxZQwZj3mIIpFBIVx8UW6mUpcGgyJj9g" />
 
-        <activity android:name=".searches.SavedSearches" />
-        <activity android:name=".searches.SearchActivity" />
-        <activity android:name=".favourite.FavouriteScreen"></activity>
+        <activity android:name=".searches.SavedSearches"  android:screenOrientation="portrait"/>
+        <activity android:name=".searches.SearchActivity" android:screenOrientation="portrait" />
+        <activity android:name=".favourite.FavouriteScreen"  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

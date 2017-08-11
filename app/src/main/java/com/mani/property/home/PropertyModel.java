@@ -11,6 +11,16 @@ private String street;
     private String city;
     private String state;
 
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    //"zipcode:":"91342"
+    private String zipcode;
     public String getZpid() {
         return zpid;
     }

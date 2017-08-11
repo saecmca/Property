@@ -62,13 +62,13 @@ public class Profile extends AppCompatActivity {
                 finish();
                 break;
             case R.id.tvsave:
-                if(etUsername.getText().toString().trim().equals("")){
+                if (etUsername.getText().toString().trim().equals("")) {
                     etUsername.setError("Please enter username");
-                }else if(etMob.getText().toString().trim().equals("")){
+                } else if (etMob.getText().toString().trim().equals("")) {
                     etMob.setError("Please enter mobile number");
-                }else{
-                    if(Dialogbox.isNetworkStatusAvialable(this))
-                        webserviceProfile(etUsername.getText().toString().trim(),etMob.getText().toString().trim());
+                } else {
+                    if (Dialogbox.isNetworkStatusAvialable(this))
+                        webserviceProfile(etUsername.getText().toString().trim(), etMob.getText().toString().trim());
                 }
                 break;
         }
@@ -90,10 +90,10 @@ public class Profile extends AppCompatActivity {
                 public void onResponse(Call<SigninResponse> call, Response<SigninResponse> response) {
                     SigninResponse model = response.body();
                     if (model != null && model.getStatus() != null && model.getStatus().getId().equalsIgnoreCase("1")) {
-                        String useremail=Localstorage.getUsrEmail(Profile.this);
+                        String useremail = Localstorage.getUsrEmail(Profile.this);
                         Localstorage.saveLoginPref(Profile.this, true, model.getUserId(), model.getUsername(), model.getMobile(), useremail, model.getAuth_token());
+                        Dialogbox.alerts(Profile.this, model.getStatus().getDescription(), "0");
 
-                        finish();
                     } else {
                         Dialogbox.alerts(Profile.this, model.getStatus().getDescription(), "2");
                     }

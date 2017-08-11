@@ -15,4 +15,8 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColorSecondary">@color/gray</item>
     </style>
+
+    <style name="TextAppearance44">
+        <item name="android:background">@color/gray</item>
+    </style>
 </resources>

@@ -82,25 +82,29 @@ public class Registeration extends AppCompatActivity {
             etUsername.requestFocus();
             return false;
         } else {
-            etUsername.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_user, 0, 0, 0);
+            etUsername.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_user_active, 0, 0, 0);
             etUsernameLayout.setErrorEnabled(false);
         }
         if (strEmail.isEmpty()) {
             etEmail.setAnimation(animShake);
+            etEmail.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_email, 0, 0, 0);
             etEmailLayout.setErrorEnabled(true);
             etEmailLayout.setError(getString(R.string.email));
             etEmail.requestFocus();
             return false;
         } else {
+            etEmail.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_email_sel, 0, 0, 0);
             etEmailLayout.setErrorEnabled(false);
         }
         if (strMobile.isEmpty()) {
             etMobile.setAnimation(animShake);
+            etMobile.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_mobile, 0, 0, 0);
             etMobileLayout.setErrorEnabled(true);
-            etMobileLayout.setError("Please enter mobile number");
+            etMobileLayout.setError("Please enter valid mobile number");
             etMobile.requestFocus();
             return false;
         } else {
+            etMobile.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_mob_sel, 0, 0, 0);
             etMobileLayout.setErrorEnabled(false);
         }
         if (strPass.isEmpty()) {

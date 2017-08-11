@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_10sdp"
-    android:padding="@dimen/_10sdp"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/_10sdp">
 
     <TextView
         android:layout_width="match_parent"
@@ -16,24 +16,49 @@
         android:textColor="@color/block"
         android:textSize="@dimen/_16sdp" />
 
-    <TextView
-        android:id="@+id/tvMsg"
+    <EditText
+        android:drawablePadding="@dimen/_5sdp"
+        android:drawableLeft="@drawable/ic_email_sel"
+        android:id="@+id/tvEmail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:minHeight="70dp"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/_13sdp" />
-    <TextView
-        android:id="@+id/tvOk"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_45sdp"
+        android:gravity="left|center"
+        android:hint="Email-id"
+        android:imeOptions="actionDone"
+        android:inputType="textEmailAddress"
+        android:lines="1"
+        android:textColor="@color/block"
+        android:textSize="@dimen/_14sdp" />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="OK"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/_16sdp" />
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_marginRight="@dimen/_10sdp"
+            android:id="@+id/tvCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Cancel"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_16sdp" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:id="@+id/tvOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="OK"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_16sdp" />
+    </LinearLayout>
 
 </LinearLayout>
 

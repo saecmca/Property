@@ -1,19 +1,22 @@
 package com.mani.property.userdetails;
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -21,6 +24,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -144,8 +148,8 @@ public class Login extends AppCompatActivity {
                 etUsernameLayout.setErrorEnabled(false);
                 etPasswordLayout.setErrorEnabled(false);
                 Dialogbox.keyboard(Login.this);
-                if(Dialogbox.isNetworkStatusAvialable(this))
-                webserviceLogin(strUsername, strPassword);
+                if (Dialogbox.isNetworkStatusAvialable(this))
+                    webserviceLogin(strUsername, strPassword);
 
 
                 break;
@@ -153,18 +157,63 @@ public class Login extends AppCompatActivity {
                 loginButton.performClick();
                 break;
             case R.id.tvForgot:
-                final EditText urlEditText = new EditText(this);
+                try {
+                    final Dialog dialog = new Dialog(Login.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    Window window = dialog.getWindow();
+                    dialog.setContentView(R.layout.forgot_dialog);
+                    window.setGravity(Gravity.CENTER);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                    dialog.setCancelable(false);
+                    final EditText editText = (EditText) dialog.findViewById(R.id.tvEmail);
+                    ((TextView) dialog.findViewById(R.id.tvOk)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!isValidEmail(editText.getText().toString().trim())) {
+                                Toast.makeText(getApplicationContext(), "Please enter your valid Email Id", Toast.LENGTH_SHORT).show();
+                            } else {
+                                dialog.dismiss();
+                                Dialogbox.keyboard(Login.this);
+                                if (Dialogbox.isNetworkStatusAvialable(Login.this))
+                                    webserviceForgot(editText.getText().toString().trim());
+                            }
+                        }
+                    });
+
+                    ((TextView) dialog.findViewById(R.id.tvCancel)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+               /* final EditText urlEditText = new EditText(this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setCancelable(false)
+                        .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int id) {
+                    // if this button is clicked, just close
+                    // the dialog box and do nothing
+                    dialog.cancel();
+                }
+            })
                         .setMessage("Dreamproperty")
                         .setView(urlEditText) //<-- layout containing EditText
 
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 //All of the fun happens inside the CustomListener now.
                                 //I had to move it to enable data validation.
                             }
                         });
+
                 final AlertDialog alertDialog = builder.create();
                 alertDialog.show();
                 urlEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
@@ -175,16 +224,16 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (!isValidEmail(urlEditText.getText().toString().trim())) {
-                            Toast.makeText(getApplicationContext(), "Please enter email-id", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Please enter your valid Email Id", Toast.LENGTH_SHORT).show();
                         } else {
                             alertDialog.dismiss();
                             Dialogbox.keyboard(Login.this);
-                            if(Dialogbox.isNetworkStatusAvialable(Login.this))
-                            webserviceForgot(urlEditText.getText().toString().trim());
+                            if (Dialogbox.isNetworkStatusAvialable(Login.this))
+                                webserviceForgot(urlEditText.getText().toString().trim());
                         }
                     }
                 });
-
+*/
                 break;
             case R.id.tvCreate:
                 startActivity(new Intent(this, Registeration.class));
@@ -196,7 +245,7 @@ public class Login extends AppCompatActivity {
         strUsername = etUsername.getText().toString();
         if (strUsername.isEmpty()) {
             etUsernameLayout.setErrorEnabled(true);
-            etUsernameLayout.setError("Please enter email-id");
+            etUsernameLayout.setError("Please enter your Email Id");
             etUsername.requestFocus();
             return false;
         } else if (!isValidEmail(strUsername)) {
@@ -291,11 +340,13 @@ public class Login extends AppCompatActivity {
                     String lastName = String.valueOf(bFacebookData.get("last_name"));
                     String gender = String.valueOf(bFacebookData.get("gender"));
                     Log.w("facebook", "onCompleted: " + EmailID);
-                    Localstorage.saveLoginPref(Login.this, true, "", FirstName, "", EmailID, "");
+                    //   Localstorage.saveLoginPref(Login.this, true, "", FirstName, "", EmailID, "");
                     //Toast.makeText(getApplicationContext(), model.getStatus().getDescription(), Toast.LENGTH_SHORT).show();
-                    Intent main = new Intent(Login.this, HomeActivity.class);
+                  /*  Intent main = new Intent(Login.this, HomeActivity.class);
                     startActivity(main);
-                    finish();
+                    finish();*/
+                    if (Dialogbox.isNetworkStatusAvialable(Login.this))
+                        webserviceFaceBookLogin(EmailID, "", FirstName);
                     // signinPresenter.callSocailmediaservice(FirstName + " " + lastName, EmailID, "", gender, AppConstants.PLATFORM, ProfileIMG, FacebookID, AppConstants.SocailFacebook, getSavedFirebaseToken);
 
                 }
@@ -318,6 +369,66 @@ public class Login extends AppCompatActivity {
             e.printStackTrace();
         }
     };
+
+    private void webserviceFaceBookLogin(final String Emailid, final String mobile, final String Username) {
+        try {
+            SigninRequest signinRequest = new SigninRequest();
+            signinRequest.setEmail(Emailid);
+            signinRequest.setMobile(mobile);
+            signinRequest.setType("facebook");
+
+            Dialogbox.showDialog(Login.this, "Loading...");
+            RestClient.APIInterface apiInterface = RestClient.getapiclient();
+            Call<SigninResponse> getcancelresponse = apiInterface.getFacebookSignin(signinRequest);
+            getcancelresponse.enqueue(new Callback<SigninResponse>() {
+                @Override
+                public void onResponse(Call<SigninResponse> call, Response<SigninResponse> response) {
+                    SigninResponse model = response.body();
+                    if (model != null && model.getStatus() != null && model.getStatus().getId().equalsIgnoreCase("1")) {
+                        Localstorage.saveLoginPref(Login.this, true, model.getUserId(), Username, model.getMobile(), Emailid, model.getAuth_token());
+                        Toast.makeText(getApplicationContext(), model.getStatus().getDescription(), Toast.LENGTH_SHORT).show();
+                        Intent main = new Intent(Login.this, HomeActivity.class);
+                        startActivity(main);
+                        finish();
+                    } else if (model.getStatus().getId().equals("0") && model.getStatus().getDescription().equals("Mobile can't be blank")) {
+                        new MaterialDialog.Builder(Login.this)
+                                .title("Alert")
+                                .cancelable(false)
+                                .inputRangeRes(5, 16, R.color.red)
+                                .inputType(InputType.TYPE_CLASS_NUMBER)
+                                .input("Mobile number", null, new MaterialDialog.InputCallback() {
+                                    @Override
+                                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                                        // Do something
+                                        if (input != null && !TextUtils.isEmpty(input) && input.length() < 16) {
+                                            dialog.dismiss();
+                                            if (Dialogbox.isNetworkStatusAvialable(Login.this))
+                                                webserviceFaceBookLogin(Emailid, input.toString(), Username);
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "Please Enter valid Mobile number", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }).positiveText("OK").positiveColor(Color.BLACK).show();
+
+
+                    } else {
+                        Dialogbox.alerts(Login.this, model.getStatus().getDescription(), "2");
+                    }
+                    Dialogbox.dismissDialog();
+                }
+
+                @Override
+                public void onFailure(Call<SigninResponse> call, Throwable t) {
+                    Dialogbox.dismissDialog();
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
     private Bundle getFacebookData(JSONObject object) {
         try {

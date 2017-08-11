@@ -5,19 +5,18 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
 
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/_10sdp"
-    android:paddingTop="@dimen/_10sdp"
-    >
+    android:orientation="vertical">
 
-    <ImageView
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_gravity="center"
+    <TextView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/menu_logo" />
-
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="40dp"
+        android:text="RICHPIGEONS"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_18sdp" />
 
 
 </LinearLayout>

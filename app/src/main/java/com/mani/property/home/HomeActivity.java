@@ -39,13 +39,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.iamhabib.easy_preference.EasyPreference;
 import com.mani.property.R;
+import com.mani.property.common.AppConstants;
 import com.mani.property.common.Dialogbox;
 import com.mani.property.common.Localstorage;
 import com.mani.property.favourite.FavResp;
 import com.mani.property.favourite.FavouriteReq;
 import com.mani.property.favourite.FavouriteScreen;
+import com.mani.property.searches.SavedSearches;
 import com.mani.property.searches.SearchActivity;
 import com.mani.property.userdetails.Login;
 import com.mani.property.userdetails.Profile;
@@ -171,7 +172,18 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     private void setUpNavigationView() {
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+
+/*
+
+        Menu menu = navView.getMenu();
+
+        MenuItem tools= menu.findItem(R.id.tools);
+
+        SpannableString s = new SpannableString(tools.getTitle());
+        s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance44),0, s.length(), 0);
+        tools.setTitle(s);
+*/
+
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             // This method will trigger on item Click of navigation menu
@@ -192,9 +204,12 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         break;
                     case R.id.nav_profile:
                         startActivity(new Intent(HomeActivity.this, Profile.class));
-                       break;
+                        break;
                     case R.id.nav_fav:
                         startActivity(new Intent(HomeActivity.this, FavouriteScreen.class));
+                        break;
+                    case R.id.nav_saved:
+                        startActivity(new Intent(HomeActivity.this, SavedSearches.class));
                         break;
                     default:
 
@@ -206,7 +221,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    @OnClick({R.id.ivMenu, R.id.ivSearch, R.id.ivFav, R.id.bntStart, R.id.tvMapview, R.id.tvListview,R.id.tvClose})
+    @OnClick({R.id.ivMenu, R.id.ivSearch, R.id.ivFav, R.id.bntStart, R.id.tvMapview, R.id.tvListview, R.id.tvClose})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivMenu:
@@ -216,6 +231,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(new Intent(this, SearchActivity.class));
                 break;
             case R.id.ivFav:
+                startActivity(new Intent(HomeActivity.this, FavouriteScreen.class));
                 break;
             case R.id.bntStart:
                 layEnd.setVisibility(View.VISIBLE);
@@ -270,7 +286,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     PropertyResp model = response.body();
                     if (model != null && model.getStatus() != null && model.getStatus().getId().equalsIgnoreCase("1")) {
                         arrProperty = model.getProperties();
-                        EasyPreference.with(HomeActivity.this).addObject("af",arrProperty).save();
+                        AppConstants.ARRPROPERTY = arrProperty;
+                        //EasyPreference.with(HomeActivity.this).addObject("af",arrProperty).save();
                         //  setMArkers(arrProperty);
                     } else {
                         Dialogbox.alerts(HomeActivity.this, model.getStatus().getDescription(), "2");
@@ -444,7 +461,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap mgoogleMap) {
         googleMap = mgoogleMap;
     }
-
 
 
     //adapter class

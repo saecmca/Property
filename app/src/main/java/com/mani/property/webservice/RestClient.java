@@ -3,6 +3,10 @@ package com.mani.property.webservice;
 import com.mani.property.favourite.FavResp;
 import com.mani.property.favourite.FavouriteReq;
 import com.mani.property.home.PropertyResp;
+import com.mani.property.searches.DeleteSearch;
+import com.mani.property.searches.SaveSearchReq;
+import com.mani.property.searches.SavedResp;
+import com.mani.property.userdetails.SigninRequest;
 import com.mani.property.userdetails.SigninResponse;
 import com.mani.property.userdetails.UserRequest;
 
@@ -56,15 +60,21 @@ public class RestClient {
 
 
     public interface APIInterface {
-         //  "Api-Token", "08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
-        //@Headers("Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a")
-        //@Headers("Content-Type: application/json")
+
         @Headers({
                 "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
         })
 
         @POST("/api/v1/users/sign_in")
         Call<SigninResponse> getSignin(@Body UserRequest signinRequest);
+
+      //facebook
+                @Headers({
+                "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
+        })
+
+        @POST("/api/v1/users/facebook")
+        Call<SigninResponse> getFacebookSignin(@Body SigninRequest signinRequest);
 
         @Headers({"Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"})
         @POST("/api/v1/users/sign_up")
@@ -93,7 +103,32 @@ public class RestClient {
         @POST("/api/v1/properties/change_favorite_property")
         Call<FavResp> getSavePropety(@Body FavouriteReq favouriteReq);
 
+        @Headers({
+                "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
+        })
+        @POST("/api/v1/properties/favorites")
+        Call<PropertyResp> getFavPrpertyList(@Body UserRequest signinRequest);
 
+
+        @Headers({
+                "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
+        })
+        @POST("/api/v1/properties/save_search_list")
+        Call<SavedResp> getSavedSearch(@Body UserRequest signinRequest);
+
+        //save search
+        @Headers({
+                "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
+        })
+        @POST("/api/v1/properties/save_search")
+        Call<PropertyResp> getSaveSearch(@Body SaveSearchReq searchReq);
+
+        //save search
+        @Headers({
+                "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
+        })
+        @POST("/api/v1/properties/delete_search")
+        Call<FavResp> deletesearch(@Body DeleteSearch deleteSearch);
 
     }
 }
