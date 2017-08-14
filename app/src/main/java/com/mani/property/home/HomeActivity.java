@@ -120,6 +120,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         setUpNavigationView();
+
+        //14.8.17
         if (Dialogbox.isNetworkStatusAvialable(this))
             websercviceProperty();
         mMapView = (MapView) findViewById(R.id.near_by_map);
