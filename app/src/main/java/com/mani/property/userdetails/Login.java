@@ -21,6 +21,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookAuthorizationException;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
@@ -35,11 +37,13 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.mani.property.R;
 import com.mani.property.common.Dialogbox;
 import com.mani.property.common.Localstorage;
+import com.mani.property.common.SwipeTouchListener;
 import com.mani.property.home.HomeActivity;
 import com.mani.property.webservice.RestClient;
 
@@ -79,6 +83,10 @@ public class Login extends AppCompatActivity {
     TextInputLayout etUsernameLayout;
     @BindView(R.id.etPasswordLayout)
     TextInputLayout etPasswordLayout;
+
+    @BindView(R.id.scroll)
+    ScrollView scroll;
+
 
     LoginButton loginButton;
     private String strUsername, strPassword;
@@ -122,6 +130,18 @@ public class Login extends AppCompatActivity {
         animShake = AnimationUtils.loadAnimation(this, R.anim.shake);
         vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+
+        scroll.setOnTouchListener(new SwipeTouchListener(Login.this) {
+            public void onSwipeRight() {
+                onBackPressed();
+            }
+        });
+    }
+
+    public void onBackPressed() {
+        Intent main=new Intent(this,DemoPages.class);
+        startActivity(main);
+        finish();
     }
 
     protected void onStart() {
@@ -154,7 +174,16 @@ public class Login extends AppCompatActivity {
 
                 break;
             case R.id.btnFacebook:
-                loginButton.performClick();
+                Profile profile = Profile.getCurrentProfile().getCurrentProfile();
+                if (profile != null) {
+                    // user has logged in
+                    LoginManager.getInstance().logOut();
+
+                } else {
+                    // user has not logged in
+                    loginButton.performClick();
+                }
+
                 break;
             case R.id.tvForgot:
                 try {
@@ -194,46 +223,7 @@ public class Login extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-               /* final EditText urlEditText = new EditText(this);
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setCancelable(false)
-                        .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog,int id) {
-                    // if this button is clicked, just close
-                    // the dialog box and do nothing
-                    dialog.cancel();
-                }
-            })
-                        .setMessage("Dreamproperty")
-                        .setView(urlEditText) //<-- layout containing EditText
 
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //All of the fun happens inside the CustomListener now.
-                                //I had to move it to enable data validation.
-                            }
-                        });
-
-                final AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-                urlEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                urlEditText.setHint("Email-id");
-                Button theButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-                theButton.setTextColor(Color.BLACK);
-                theButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (!isValidEmail(urlEditText.getText().toString().trim())) {
-                            Toast.makeText(getApplicationContext(), "Please enter your valid Email Id", Toast.LENGTH_SHORT).show();
-                        } else {
-                            alertDialog.dismiss();
-                            Dialogbox.keyboard(Login.this);
-                            if (Dialogbox.isNetworkStatusAvialable(Login.this))
-                                webserviceForgot(urlEditText.getText().toString().trim());
-                        }
-                    }
-                });
-*/
                 break;
             case R.id.tvCreate:
                 startActivity(new Intent(this, Registeration.class));
@@ -366,7 +356,11 @@ public class Login extends AppCompatActivity {
 
         @Override
         public void onError(FacebookException e) {
-            e.printStackTrace();
+            if (e instanceof FacebookAuthorizationException) {
+                if (AccessToken.getCurrentAccessToken() != null) {
+                    LoginManager.getInstance().logOut();
+                }
+            }
         }
     };
 

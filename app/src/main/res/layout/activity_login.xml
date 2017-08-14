@@ -4,30 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mani.property.MainActivity">
+    android:id="@+id/scroll"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <RelativeLayout
             android:id="@+id/logo"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/loginbg" />
-        <TextView
-            android:textSize="@dimen/_20sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="RICHPIGEONS"
-            android:textColor="@color/block" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_170sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bluepattern" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/circle_draw"
+                android:gravity="center"
+                android:text="RICHPIGEONS"
+                android:textColor="@color/block"
+                android:textSize="@dimen/_11sdp" />
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_below="@+id/logo"
             android:layout_margin="@dimen/_10sdp"
             android:orientation="vertical">
@@ -35,8 +44,7 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/etUsernameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/etUsername"
@@ -80,11 +88,13 @@
                 android:background="@drawable/btn_radius"
                 android:text="Sign in"
                 android:textColor="@color/white" />
+
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
+
             <Button
                 android:id="@+id/btnFacebook"
                 android:layout_width="match_parent"

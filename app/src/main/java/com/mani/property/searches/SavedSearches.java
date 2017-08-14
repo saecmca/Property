@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.mani.property.R;
 import com.mani.property.common.Dialogbox;
@@ -22,12 +24,16 @@ public class SavedSearches extends AppCompatActivity {
 
     @BindView(R.id.rclSaved)
     RecyclerView rclSaved;
+
+
+    public static TextView tvNosearch;
     // private ArrayList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_searches);
+        tvNosearch=(TextView)findViewById(R.id.tvNosearch);
         ButterKnife.bind(this);
         rclSaved.setHasFixedSize(true);
         rclSaved.setLayoutManager(new LinearLayoutManager(this));
@@ -51,6 +57,7 @@ public class SavedSearches extends AppCompatActivity {
                         rclSaved.setAdapter(savedSearchAdapter);
 
                     } else {
+                        tvNosearch.setVisibility(View.VISIBLE);
                         Dialogbox.alerts(SavedSearches.this, model.getStatus().getDescription(), "2");
                     }
                     Dialogbox.dismissDialog();

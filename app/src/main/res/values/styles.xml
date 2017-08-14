@@ -16,7 +16,39 @@
         <item name="android:textColorSecondary">@color/gray</item>
     </style>
 
-    <style name="TextAppearance44">
-        <item name="android:background">@color/gray</item>
+
+
+
+
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+
+        <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
+        <item name="android:actionBarWidgetTheme">@style/PopupMenuTextView</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+
+        <!-- Change Overflow Menu ListView Item Height & Property -->
+        <item name="android:listPreferredItemHeightSmall">35dp</item>
+
+    </style>
+
+    <!-- Change Overflow Menu ListView Divider Property -->
+    <style name="PopupMenuListView" parent="@android:style/Widget.Holo.ListView.DropDown">
+        <item name="android:divider">@color/colorAccent</item>
+        <item name="android:dividerHeight">2dp</item>
+    </style>
+
+    <!-- Change Overflow Menu ListView Text Size and Text Size -->
+    <style name="PopupMenuTextView" parent="@style/android:Theme.Holo.Light">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!-- Change Overflow Menu Background -->
+    <style name="PopupMenu" parent="android:Widget.Holo.Light">
+        <item name="android:popupBackground">@color/colorAccent</item>
+    </style>
+    <style name="NavigationViewStyle">
+        <item name="android:textSize">15sp</item> <!-- menu item text size-->
+        <item name="android:listPreferredItemHeightSmall">35dp</item><!-- menu item height-->
     </style>
 </resources>

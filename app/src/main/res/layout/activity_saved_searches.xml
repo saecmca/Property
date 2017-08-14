@@ -44,5 +44,13 @@
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
+<TextView
+    android:visibility="gone"
+    android:id="@+id/tvNosearch"
+    android:textSize="@dimen/_14sdp"
+    android:gravity="center"
+    android:layout_centerInParent="true"
+    android:layout_width="match_parent"
+    android:text="No saved search found"
+    android:layout_height="wrap_content" />
 </RelativeLayout>

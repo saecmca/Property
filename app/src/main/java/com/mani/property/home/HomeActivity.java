@@ -48,7 +48,7 @@ import com.mani.property.favourite.FavouriteReq;
 import com.mani.property.favourite.FavouriteScreen;
 import com.mani.property.searches.SavedSearches;
 import com.mani.property.searches.SearchActivity;
-import com.mani.property.userdetails.Login;
+import com.mani.property.userdetails.DemoPages;
 import com.mani.property.userdetails.Profile;
 import com.mani.property.userdetails.UserRequest;
 import com.mani.property.webservice.RestClient;
@@ -188,7 +188,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     case R.id.nav_logout:
                         Localstorage.clearAllPreferences(HomeActivity.this);
                         Toast.makeText(getApplicationContext(), "Successfully loged out", Toast.LENGTH_SHORT).show();
-                        Intent main = new Intent(HomeActivity.this, Login.class);
+                        Intent main = new Intent(HomeActivity.this, DemoPages.class);
                         startActivity(main);
                         finish();
                         break;
@@ -306,7 +306,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 MarkerOptions markerOptions = new MarkerOptions();
 
-                numTxt.setText("$" + maparray_count.get(i).getAmount());
+                numTxt.setText("$" + maparray_count.get(i).getMap_amount());
                 if (maparray_count.get(i).getPosting_type().contains("FOR RENT")) {
                     numTxt.setBackgroundResource(R.mipmap.location_label_purple);
                     markerOptions.position(new LatLng(Double.valueOf(maparray_count.get(i).getLatitude()), Double.valueOf(maparray_count.get(i).getLongitude()))).

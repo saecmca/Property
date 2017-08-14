@@ -11,6 +11,15 @@ private String street;
     private String city;
     private String state;
 
+    public String getMap_amount() {
+        return map_amount;
+    }
+
+    public void setMap_amount(String map_amount) {
+        this.map_amount = map_amount;
+    }
+
+    private String map_amount;
     public String getZipcode() {
         return zipcode;
     }

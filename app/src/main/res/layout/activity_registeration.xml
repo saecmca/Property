@@ -9,28 +9,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
-        <ImageView
-            android:id="@+id/logo"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_190sdp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/loginbg" />
-        <TextView
-            android:textSize="@dimen/_20sdp"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="RICHPIGEONS"
-            android:textColor="@color/block" />
+            android:background="@color/colorPrimary">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-15dp">
+
+                <ImageView
+                    android:id="@+id/ivMenu"
+                    android:layout_width="@dimen/_28sdp"
+                    android:layout_height="@dimen/_28sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@mipmap/icon_back"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/_9sdp"
+                    android:layout_toRightOf="@+id/ivMenu"
+                    android:text="Sign Up"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp" />
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/logo"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:orientation="vertical">
@@ -74,25 +95,6 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/etMobileLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp">
-
-                <EditText
-                    android:id="@+id/etMobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_mobile"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:drawableStart="@drawable/ic_mobile"
-                    android:hint="MOBILE NO"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:textSize="@dimen/_12sdp" />
-
-            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/etPasswordLayout"
@@ -113,6 +115,46 @@
                     android:textSize="@dimen/_12sdp" />
 
             </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/etconPasswordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp">
+
+                <EditText
+                    android:id="@+id/etconPwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icon_password"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:drawableStart="@drawable/icon_password"
+                    android:hint="CONFIRM PASSWORD"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:textSize="@dimen/_12sdp" />
+
+            </android.support.design.widget.TextInputLayout>
+            <!--<android.support.design.widget.TextInputLayout
+                android:id="@+id/etMobileLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp">
+
+                <EditText
+                    android:id="@+id/etMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_mobile"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:drawableStart="@drawable/ic_mobile"
+                    android:hint="MOBILE NO"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textSize="@dimen/_12sdp" />
+
+            </android.support.design.widget.TextInputLayout>-->
+
+
 
             <Button
                 android:id="@+id/btnRegister"
@@ -123,7 +165,26 @@
                 android:text="REGISTER"
 
                 android:textColor="@color/white" />
+            <TextView
+                android:layout_marginTop="@dimen/_7sdp"
+                android:textSize="@dimen/_14sdp"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                android:text="or"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
+            <Button
+                android:id="@+id/btnFacebook"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:background="@drawable/btn_fb" />
 
         </LinearLayout>
     </RelativeLayout>

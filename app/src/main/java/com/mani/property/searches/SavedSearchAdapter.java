@@ -56,6 +56,7 @@ public class SavedSearchAdapter extends RecyclerView.Adapter<SavedSearchAdapter.
             });
 
 
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,6 +75,9 @@ public class SavedSearchAdapter extends RecyclerView.Adapter<SavedSearchAdapter.
                     FavResp model = response.body();
                     if (model != null && model.getStatus() != null && model.getStatus().getId().equalsIgnoreCase("1")) {
                         arrayList.remove(position);
+                        if(arrayList.size()>0)
+                            SavedSearches.tvNosearch.setVisibility(View.GONE);
+                        else SavedSearches.tvNosearch.setVisibility(View.VISIBLE);
                         notifyDataSetChanged();
                     } else {
                         Dialogbox.alerts(mcontent, model.getStatus().getDescription(), "2");

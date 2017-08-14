@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.mani.property.common.Localstorage;
 import com.mani.property.home.HomeActivity;
+import com.mani.property.userdetails.DemoPages;
 import com.mani.property.userdetails.Login;
 
 import java.security.MessageDigest;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(main);
                     finish();
                 } else {
-                    Intent main = new Intent(MainActivity.this, Login.class);
+                    Intent main = new Intent(MainActivity.this, DemoPages.class);
                     startActivity(main);
                     finish();
                 }

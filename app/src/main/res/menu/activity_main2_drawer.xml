@@ -1,58 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:id="@+id/gr_nav">
 
+        <item
+
+            android:id="@+id/nav_profile"
+            android:icon="@mipmap/profile_gray"
+            android:title="My Profile" />
+        <item
+            android:id="@+id/nav_fav"
+            android:icon="@mipmap/favorite_gray"
+            android:title="Favorites" />
+
+    </group>
+    <group android:id="@+id/gr_recc">
+
+        <item
+            android:id="@+id/nav_reccom"
+            android:icon="@mipmap/icon_comparison"
+            android:title="Recent Comaprision" />
+        <item
+            android:id="@+id/nav_board"
+            android:icon="@mipmap/icon_boards"
+            android:title="Boards" />
+
+    </group>
+    <group android:id="@+id/gr_rec">
+    <item
+        android:id="@+id/nav_saved"
+        android:icon="@mipmap/savedsearch_gray"
+        android:title="Saved Searches" />
+    <item
+        android:id="@+id/nav_send"
+        android:icon="@mipmap/recentsearch_gray"
+        android:title="Resent Searches" />
+</group>
+    <group android:id="@+id/gr_not">
+    <item
+        android:id="@+id/nav_notes"
+        android:icon="@mipmap/notes_gray"
+        android:title="My Notes" />
+    <item
+        android:id="@+id/nav_photos"
+        android:icon="@mipmap/images_gray"
+        android:title="My Photos" />
+</group>
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@mipmap/settings_gray"
+        android:title="Settings" />
 
     <item
-        android:id="@+id/tools"
-        android:title="Category 1">
-        <menu>
-            <item
-                android:id="@+id/nav_profile"
-                android:icon="@mipmap/profile_gray"
-                android:title="My Profile" />
-            <item
-                android:id="@+id/nav_fav"
-                android:icon="@mipmap/favorite_gray"
-                android:title="Favorites" />
+        android:id="@+id/nav_logout"
+        android:icon="@mipmap/logout_gray"
+        android:title="Logout" />
 
-        </menu>
-    </item>
-
-
-    <item android:title="Category 2">
-        <menu>
-            <item
-                android:id="@+id/nav_saved"
-                android:icon="@mipmap/savedsearch_gray"
-                android:title="Saved Searches" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@mipmap/recentsearch_gray"
-                android:title="Resend Searches" />
-        </menu>
-    </item>
-    <item android:title="Category 3">
-        <menu>
-            <item
-                android:id="@+id/nav_notes"
-                android:icon="@mipmap/notes_gray"
-                android:title="My Notes" />
-            <item
-                android:id="@+id/nav_photos"
-                android:icon="@mipmap/images_gray"
-                android:title="My Photos" />
-
-            <item
-                android:id="@+id/nav_setting"
-                android:icon="@mipmap/settings_gray"
-                android:title="Settings" />
-
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@mipmap/logout_gray"
-                android:title="Logout" />
-        </menu>
-    </item>
 
 </menu>

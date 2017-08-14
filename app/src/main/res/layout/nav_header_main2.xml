@@ -3,20 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="40dp"
-        android:text="RICHPIGEONS"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_18sdp" />
+    <RelativeLayout
+        android:background="@drawable/bluepattern"
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_105sdp">
+        <TextView
+            android:layout_marginBottom="@dimen/_13sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/circle_draw"
+            android:gravity="center"
+            android:text="RICHPIGEONS"
+            android:textColor="@color/block"
+            android:textSize="@dimen/_8sdp" />
+    </RelativeLayout>
+    <!--<TextView
+        android:textSize="@dimen/_14sdp"
+        android:drawablePadding="@dimen/_10sdp"
+        android:drawableLeft="@mipmap/profile_gray"
+        android:textColor="@color/block"
+        android:text="My Profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />-->
 
 
 </LinearLayout>
