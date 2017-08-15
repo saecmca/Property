@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mani.property.R;
+import com.mani.property.boards.BoardScreen;
 import com.mani.property.common.AppConstants;
 import com.mani.property.common.Dialogbox;
 import com.mani.property.common.Localstorage;
@@ -202,6 +203,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         break;
                     case R.id.nav_saved:
                         startActivity(new Intent(HomeActivity.this, SavedSearches.class));
+                        break;
+                    case R.id.nav_board:
+                        startActivity(new Intent(HomeActivity.this, BoardScreen.class));
                         break;
                     default:
 

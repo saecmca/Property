@@ -1,11 +1,13 @@
 package com.mani.property.webservice;
 
+import com.mani.property.boards.BoardResp;
 import com.mani.property.favourite.FavResp;
 import com.mani.property.favourite.FavouriteReq;
 import com.mani.property.home.PropertyResp;
 import com.mani.property.searches.DeleteSearch;
 import com.mani.property.searches.SaveSearchReq;
 import com.mani.property.searches.SavedResp;
+import com.mani.property.userdetails.DemoResp;
 import com.mani.property.userdetails.SigninRequest;
 import com.mani.property.userdetails.SigninResponse;
 import com.mani.property.userdetails.UserRequest;
@@ -129,6 +131,26 @@ public class RestClient {
         })
         @POST("/api/v1/properties/delete_search")
         Call<FavResp> deletesearch(@Body DeleteSearch deleteSearch);
+
+        //save search
+        @Headers({
+                "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
+        })
+        @POST("/api/v1/landing")
+        Call<DemoResp> getDemo();
+
+        //save search
+        @Headers({
+                "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
+        })
+        @POST("/api/v1/boards/collections")
+        Call<BoardResp> getBoard(@Body UserRequest userRequest);
+
+        @Headers({
+                "Content-Type: application/json","Api-Token: 08d0906bb2579eca5c590ffbd447857419b356a194cdf39dfa6dabc35529734a"
+        })
+        @POST("/api/v1/boards/delete_board_property")
+        Call<BoardResp> delBoardProperty(@Body UserRequest delBoardReq);
 
     }
 }

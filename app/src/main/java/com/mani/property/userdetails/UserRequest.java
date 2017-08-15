@@ -1,6 +1,7 @@
 package com.mani.property.userdetails;
 
 import com.google.gson.annotations.SerializedName;
+import com.mani.property.boards.DelBoardReq;
 
 /**
  * Created by Mani on 31-07-2017.
@@ -26,4 +27,10 @@ public class UserRequest {
 
     @SerializedName("user")
     SigninRequest user;
+
+    public void setBoard(DelBoardReq board) {
+        this.board = board;
+    }
+    @SerializedName("board")
+    DelBoardReq board;
 }
